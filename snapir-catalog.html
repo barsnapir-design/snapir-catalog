@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snapir Projects — קטלוג מוצרים והזמנה</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0d0f; --bg2:#131417; --card:#17191d; --card2:#1d2025;
+  --line:#26292f; --line2:#33373f;
+  --ink:#f0ede6; --muted:#9a9da6; --dim:#6d707a;
+  --gold:#c8a24b; --gold-hi:#e6c874; --gold-dim:#8a7135;
+  --olive:#8a9a6b; --danger:#d96a4d;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo','Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;
+  background-image:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(200,162,75,.07),transparent)}
+::selection{background:var(--gold);color:#000}
+
+/* ================ header ================ */
+header.site{padding:34px 20px 0;text-align:center}
+.logo-wrap{display:flex;justify-content:center;margin-bottom:14px}
+.logo-wrap img{max-height:230px;max-width:340px;object-fit:contain;mix-blend-mode:screen;
+  filter:drop-shadow(0 0 30px rgba(255,255,255,.18))}
+.brand h1{font-family:'Rubik','Heebo',sans-serif;font-weight:800;font-size:30px;letter-spacing:6px;color:var(--ink)}
+.brand h1 span{color:var(--gold)}
+.brand .sub{color:var(--muted);font-size:14px;letter-spacing:1px;margin-top:4px}
+.katana{width:min(560px,80%);height:2px;margin:22px auto 0;
+  background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold-hi) 50%,var(--gold) 80%,transparent)}
+nav.jump{display:flex;justify-content:center;gap:10px;padding:16px 0 6px;position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,var(--bg) 75%,transparent)}
+nav.jump a,nav.jump button{font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);background:var(--card);
+  border:1px solid var(--line);border-radius:30px;padding:8px 20px;cursor:pointer;text-decoration:none;transition:.2s}
+nav.jump a:hover,nav.jump button:hover{color:var(--gold-hi);border-color:var(--gold-dim)}
+nav.jump .badge{background:var(--gold);color:#141414;border-radius:20px;font-size:12px;font-weight:800;padding:1px 8px;margin-inline-start:6px}
+
+main{max-width:1280px;margin:0 auto;padding:18px 20px 90px}
+.hidden{display:none !important}
+h2.sec{font-family:'Rubik','Heebo',sans-serif;font-size:22px;font-weight:800;letter-spacing:1px;margin:26px 0 6px;display:flex;align-items:center;gap:14px}
+h2.sec::before{content:"";width:26px;height:2px;background:var(--gold)}
+h2.sec::after{content:"";flex:1;height:1px;background:var(--line)}
+p.lead{color:var(--muted);font-size:14px;margin-bottom:20px}
+
+/* ================ shop layout: catalog + sticky cart ================ */
+.shop{display:grid;grid-template-columns:300px 1fr;gap:24px;align-items:start}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+
+/* ---- product card ---- */
+.card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:18px;
+  overflow:hidden;display:flex;flex-direction:column;transition:.25s;position:relative}
+.card:hover{border-color:var(--gold-dim);transform:translateY(-3px);box-shadow:0 14px 34px rgba(0,0,0,.45)}
+.card::after{content:"";position:absolute;inset-inline:0;top:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:.25s}
+.card:hover::after{opacity:1}
+.imgbox{background:#e9eaea;aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.imgbox img{width:100%;height:100%;object-fit:contain}
+.thumbs{display:flex;gap:6px;padding:10px 14px 0}
+.thumbs img{width:50px;height:38px;object-fit:cover;border-radius:6px;border:2px solid var(--line);cursor:pointer;background:#e9eaea;opacity:.75}
+.thumbs img.sel{border-color:var(--gold);opacity:1}
+.card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.card h3{font-family:'Rubik','Heebo',sans-serif;font-size:20px;font-weight:800}
+.card h3 small{color:var(--gold);font-weight:600;font-size:12px;letter-spacing:2px;margin-inline-start:8px}
+.card .desc{color:var(--muted);font-size:13.5px}
+.pricebox{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13.5px;display:flex;flex-direction:column;gap:3px}
+.pricebox .main{font-size:19px;font-weight:800;color:var(--gold-hi)}
+.pricebox .main small{font-size:11.5px;font-weight:400;color:var(--muted)}
+.pricebox .incvat{color:var(--muted);font-size:12.5px}
+.pricebox .pair{color:var(--olive);font-weight:600;font-size:13px}
+.pricebox .basefin{color:var(--gold-hi);font-size:12.5px;font-weight:600;border-top:1px dashed var(--line2);margin-top:4px;padding-top:5px}
+.tagrow{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:11.5px;border-radius:20px;padding:2px 11px;background:rgba(138,154,107,.12);color:var(--olive);border:1px solid rgba(138,154,107,.3)}
+.tag.note{background:rgba(217,106,77,.1);color:var(--danger);border-color:rgba(217,106,77,.3)}
+.igbtn{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--gold-hi);text-decoration:none;
+  border:1px solid var(--gold-dim);background:rgba(200,162,75,.07);border-radius:8px;padding:5px 13px;width:fit-content;transition:.2s}
+.igbtn:hover{background:rgba(200,162,75,.16)}
+.igbtn.disabled{opacity:.35;pointer-events:none}
+.addrow{display:flex;gap:8px;align-items:center;margin-top:auto;padding-top:8px}
+.addrow label{font-size:12.5px;color:var(--muted)}
+.addrow input[type=number]{width:62px;padding:8px;border:1px solid var(--line2);border-radius:9px;font-family:inherit;font-size:15px;text-align:center;background:var(--bg2);color:var(--ink)}
+.btn{font-family:inherit;font-size:14.5px;font-weight:700;border:none;border-radius:10px;padding:10px 18px;cursor:pointer;transition:.2s}
+.btn.add{background:linear-gradient(135deg,var(--gold),#a8843a);color:#141414;flex:1;letter-spacing:.3px}
+.btn.add:hover{background:linear-gradient(135deg,var(--gold-hi),var(--gold));box-shadow:0 4px 16px rgba(200,162,75,.35)}
+.btn.dark{background:var(--card2);color:var(--ink);border:1px solid var(--line2)}
+.btn.dark:hover{border-color:var(--gold-dim);color:var(--gold-hi)}
+.btn.ghost{background:transparent;border:1px solid var(--line2);color:var(--muted)}
+.btn.ghost:hover{color:var(--ink);border-color:var(--dim)}
+.btn.small{font-size:12.5px;padding:6px 12px}
+.btn.danger{background:rgba(217,106,77,.1);color:var(--danger);border:1px solid rgba(217,106,77,.35)}
+.btn.send{background:linear-gradient(135deg,#43a85e,#2e7d43);color:#fff;font-size:16.5px;font-weight:800;
+  padding:13px 30px;letter-spacing:.3px;box-shadow:0 4px 18px rgba(63,158,88,.35)}
+.btn.send:hover{background:linear-gradient(135deg,#4fbd6b,#379450);box-shadow:0 6px 24px rgba(63,158,88,.5);transform:translateY(-1px)}
+
+/* ---- sticky cart ---- */
+aside.cart{position:sticky;top:64px;background:linear-gradient(180deg,var(--card),var(--bg2));
+  border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:16px;padding:18px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+aside.cart h3{font-family:'Rubik','Heebo',sans-serif;font-size:17px;font-weight:800;display:flex;align-items:center;gap:8px;margin-bottom:12px}
+aside.cart h3 .cnt{background:var(--gold);color:#141414;border-radius:20px;font-size:12px;padding:1px 9px}
+.cart-empty{color:var(--dim);font-size:13.5px;text-align:center;padding:18px 0}
+.citem{padding:9px 0;border-bottom:1px solid var(--line)}
+.citem .cmain{display:flex;gap:10px;align-items:center}
+.citem img{width:46px;height:36px;object-fit:contain;background:#e9eaea;border-radius:6px;flex-shrink:0}
+.paintrow{display:flex;gap:8px;align-items:center;padding:7px 0 0;flex-wrap:wrap}
+.paintrow label{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap}
+.paintrow label:hover{color:var(--gold-hi)}
+.paintrow input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;cursor:pointer}
+.paintrow input.ccolor{flex:1;min-width:90px;padding:5px 9px;font-size:12px;background:var(--bg2);border:1px solid var(--gold-dim);border-radius:7px;color:var(--ink);font-family:inherit}
+.paintrow input.ccolor:focus{outline:none;border-color:var(--gold)}
+.citem .inf{flex:1;min-width:0}
+.citem .nm{font-size:13.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.citem .fin{font-size:11px;color:var(--muted)}
+.citem .pr{font-size:13px;color:var(--gold-hi);font-weight:700;white-space:nowrap}
+.qctl{display:flex;align-items:center;gap:2px;background:var(--bg2);border:1px solid var(--line2);border-radius:8px;padding:1px}
+.qctl button{background:none;border:none;color:var(--gold-hi);font-size:15px;width:22px;height:24px;cursor:pointer;line-height:1}
+.qctl span{font-size:13px;min-width:18px;text-align:center;font-weight:700}
+.citem .x{background:none;border:none;color:var(--dim);cursor:pointer;font-size:14px}
+.citem .x:hover{color:var(--danger)}
+.ctot{margin-top:12px;font-size:13.5px;display:flex;flex-direction:column;gap:4px}
+.ctot .row{display:flex;justify-content:space-between;color:var(--muted)}
+.ctot .row.g{border-top:1px solid var(--line2);margin-top:6px;padding-top:8px;color:var(--ink);font-weight:800;font-size:16px}
+.ctot .row.g span:last-child{color:var(--gold-hi)}
+aside.cart .cta{width:100%;margin-top:14px;padding:12px;font-size:15px}
+
+/* ================ order section ================ */
+.panel{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:16px;padding:22px;margin-bottom:20px}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.fields label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted)}
+.fields input,.fields textarea{padding:9px 12px;border:1px solid var(--line2);border-radius:9px;font-family:inherit;font-size:15px;background:var(--bg2);color:var(--ink)}
+.fields input:focus,.fields textarea:focus{outline:none;border-color:var(--gold-dim)}
+.fields .wide{grid-column:1/-1}
+.ordwrap{overflow-x:auto}
+table.order{width:100%;border-collapse:collapse;font-size:13.5px}
+table.order th{background:var(--card2);text-align:right;padding:9px 10px;font-weight:600;font-size:12px;color:var(--muted);border-bottom:2px solid var(--line2);white-space:nowrap}
+table.order td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+table.order img.mini{width:60px;height:44px;object-fit:contain;background:#e9eaea;border-radius:6px}
+table.order input,table.order select{padding:6px 8px;border:1px solid var(--line2);border-radius:7px;font-family:inherit;font-size:13.5px;background:var(--bg2);color:var(--ink)}
+table.order input.qty{width:56px;text-align:center}
+table.order input.color{width:108px}
+table.order input.madd{width:72px;text-align:center}
+table.order input.lnote{width:108px}
+td.num{white-space:nowrap;font-variant-numeric:tabular-nums}
+td.total{font-weight:800;color:var(--gold-hi)}
+.rm{background:none;border:none;color:var(--danger);font-size:17px;cursor:pointer;line-height:1}
+.empty{color:var(--dim);text-align:center;padding:26px 0;font-size:14.5px}
+.sumwrap{display:flex;justify-content:flex-start;margin-top:16px}
+.summary{min-width:340px;background:var(--card2);border:1px solid var(--line2);border-radius:12px;padding:16px 20px;font-size:14.5px}
+.summary .row{display:flex;justify-content:space-between;padding:4px 0;color:var(--muted)}
+.summary .row span:last-child{color:var(--ink)}
+.summary .row.grand{border-top:2px solid var(--gold);margin-top:8px;padding-top:10px;font-size:18px;font-weight:800;color:var(--ink)}
+.summary .row.grand span:last-child{color:var(--gold-hi)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.hint{font-size:12.5px;color:var(--dim);margin-top:10px}
+
+/* ================ toast ================ */
+#toast{position:fixed;bottom:26px;inset-inline-start:50%;transform:translateX(50%) translateY(80px);opacity:0;
+  background:var(--gold);color:#141414;font-weight:800;font-size:14.5px;padding:11px 26px;border-radius:30px;
+  box-shadow:0 8px 24px rgba(0,0,0,.5);transition:.3s;z-index:200;pointer-events:none}
+#toast.show{transform:translateX(50%) translateY(0);opacity:1}
+
+/* ================ admin ================ */
+.adm-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin-bottom:16px}
+.adm-card h3{font-size:16px;margin-bottom:12px;color:var(--gold-hi)}
+.adm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.adm-grid label{display:flex;flex-direction:column;gap:3px;font-size:11.5px;color:var(--muted)}
+.adm-grid input,.adm-grid textarea{padding:7px 10px;border:1px solid var(--line2);border-radius:7px;font-family:inherit;font-size:13.5px;background:var(--bg2);color:var(--ink)}
+.adm-grid .wide{grid-column:1/-1}
+.adm-imgs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;align-items:center}
+.adm-imgs .imwrap{position:relative}
+.adm-imgs img{width:84px;height:62px;object-fit:cover;border-radius:8px;border:1px solid var(--line2);background:#e9eaea}
+.adm-imgs .del{position:absolute;top:-7px;inset-inline-start:-7px;background:var(--danger);color:#fff;border:none;border-radius:50%;width:20px;height:20px;font-size:12px;cursor:pointer;line-height:1}
+.adm-imgs .mainbadge{position:absolute;top:-7px;inset-inline-end:-4px;background:var(--gold);color:#141414;font-size:9.5px;font-weight:800;border-radius:8px;padding:1px 7px;z-index:2}
+.adm-imgs .imctl{display:flex;gap:3px;justify-content:center;margin-top:4px}
+.adm-imgs .imctl button{background:var(--card2);border:1px solid var(--line2);color:var(--gold-hi);border-radius:5px;font-size:11px;cursor:pointer;padding:2px 8px;line-height:1.3}
+.adm-imgs .imctl button:hover{border-color:var(--gold)}
+.adm-actions{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0 24px}
+.notice{background:rgba(200,162,75,.07);border:1px solid var(--gold-dim);border-radius:10px;padding:12px 16px;font-size:13.5px;color:var(--gold-hi);margin-bottom:18px}
+footer.site{max-width:1280px;margin:0 auto;padding:0 20px 40px;display:flex;justify-content:space-between;color:var(--dim);font-size:12.5px}
+footer.site button{background:none;border:none;color:var(--dim);cursor:pointer;font-family:inherit;font-size:12.5px;text-decoration:underline}
+footer.site button:hover{color:var(--gold-hi)}
+
+/* ================ print ================ */
+#printsheet{display:none}
+@media print{
+  body{background:#fff}
+  body *{visibility:hidden}
+  #printsheet,#printsheet *{visibility:visible}
+  #printsheet{display:block;position:absolute;top:0;right:0;left:0;padding:0 6mm}
+  @page{size:A4;margin:12mm}
+}
+#printsheet{font-size:13px;color:#111;background:#fff}
+#printsheet .phead{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #111;padding-bottom:10px;margin-bottom:14px}
+#printsheet .phead .tt h1{font-size:22px;font-weight:900;letter-spacing:2px}
+#printsheet .phead .tt div{color:#555;font-size:12px}
+#printsheet .phead img.plogo{max-height:70px;max-width:130px;object-fit:contain;filter:invert(1)}
+#printsheet h2{font-size:15px;margin:12px 0 6px}
+#printsheet table{width:100%;border-collapse:collapse}
+#printsheet th{background:#f0f0ee;border:1px solid #ccc;padding:6px;font-size:11.5px}
+#printsheet td{border:1px solid #ccc;padding:6px;font-size:11.5px}
+#printsheet td.num{text-align:left;white-space:nowrap}
+#printsheet .cust{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px 20px;margin-bottom:10px}
+#printsheet .psum{margin-top:12px;width:280px;margin-inline-start:auto}
+#printsheet .psum .row{display:flex;justify-content:space-between;padding:2px 0}
+#printsheet .psum .grand{border-top:2px solid #111;font-weight:800;font-size:15px;margin-top:5px;padding-top:5px}
+#printsheet img.pimg{width:56px;height:42px;object-fit:contain}
+
+@media(max-width:920px){
+  .shop{grid-template-columns:1fr}
+  aside.cart{position:static;order:-1}
+  table.order{min-width:900px}
+}
+</style>
+</head>
+<body>
+
+<script type="application/json" id="product-data">
+{
+  "vatRate": 0.18,
+  "dataVer": 2,
+  "logo": "",
+  "products": [
+    {
+      "id": "rocket",
+      "name": "רוקט",
+      "nameEn": "ROCKET",
+      "desc": "מכשול נינג'ה שמותקן לרוב בזוג.",
+      "unitPrice": 2000,
+      "pairPrice": null,
+      "colorAdd": 100,
+      "finishIncluded": "עץ בירץ' בציפוי לכה — כלול במחיר",
+      "notes": "לרוב מותקן בזוג",
+      "defaultQty": 2,
+      "instagram": "",
+      "images": []
+    },
+    {
+      "id": "rotator",
+      "name": "רוטייטור",
+      "nameEn": "ROTATOR",
+      "desc": "מכשול רוטייטור, ללא בר.",
+      "unitPrice": 1100,
+      "pairPrice": 2000,
+      "colorAdd": 100,
+      "finishIncluded": "עץ בירץ' בציפוי לכה — כלול במחיר",
+      "notes": "ללא בר",
+      "defaultQty": 2,
+      "instagram": "",
+      "images": []
+    },
+    {
+      "id": "flipcrimp",
+      "name": "קרימפ מתהפך",
+      "nameEn": "Flip Crimp",
+      "desc": "מכשול קרימפ מתהפך.",
+      "unitPrice": 800,
+      "pairPrice": 1500,
+      "colorAdd": 100,
+      "finishIncluded": "עץ בירץ' בציפוי לכה — כלול במחיר",
+      "notes": "",
+      "defaultQty": 2,
+      "instagram": "",
+      "images": []
+    }
+  ]
+}
+</script>
+
+<header class="site">
+  <div class="logo-wrap"><img id="siteLogo" src="" alt="Snapir Projects"></div>
+  <div class="brand">
+    <h1>SNAPIR <span>PROJECTS</span></h1>
+    <div class="sub">מתקני נינג'ה ומכשולים מקצועיים · עץ / CNC</div>
+  </div>
+  <div class="katana"></div>
+</header>
+
+<nav class="jump" id="mainNav">
+  <a href="#catalog-top">קטלוג</a>
+  <a href="#order-section">ההזמנה שלי <span class="badge" id="cartCount">0</span></a>
+</nav>
+
+<main>
+  <!-- ============ SHOP (catalog + live cart) ============ -->
+  <section id="shop">
+    <h2 class="sec" id="catalog-top">קטלוג מוצרים</h2>
+    <p class="lead">בחרו מוצרים, קבעו כמות והוסיפו להזמנה — הסל מתעדכן בזמן אמת בצד. כל המחירים בש"ח, לפני מע"מ אלא אם צוין אחרת.<br>
+    <b style="color:var(--gold-hi)">כל המוצרים מסופקים בעץ בירץ' בציפוי לכה — כלול במחיר.</b> רוצים צבע? תוספת 100 ₪ ליחידה — מסמנים בסל, וציון הגוון אופציונלי.</p>
+
+    <div class="shop">
+      <aside class="cart" id="cartBox">
+        <h3>🛒 ההזמנה שלך <span class="cnt" id="cartCount2">0</span></h3>
+        <div id="cartItems"></div>
+        <div class="ctot" id="cartTotals"></div>
+        <button class="btn add cta" onclick="document.getElementById('order-section').scrollIntoView()">לסיום ההזמנה ⬇</button>
+      </aside>
+
+      <div class="grid" id="catalogGrid"></div>
+    </div>
+
+    <!-- ============ ORDER ============ -->
+    <h2 class="sec" id="order-section" style="margin-top:48px">סיום הזמנה</h2>
+    <p class="lead">מלאו פרטים, בדקו את הפריטים ושלחו — בוואטסאפ, במייל או כ-PDF מודפס.</p>
+
+    <div class="panel">
+      <h2 class="sec" style="margin-top:0;font-size:17px">פרטי לקוח</h2>
+      <div class="fields">
+        <label>שם לקוח<input id="c_name" type="text"></label>
+        <label>טלפון<input id="c_phone" type="tel"></label>
+        <label>מייל<input id="c_email" type="email"></label>
+        <label>שם פרויקט / מקום התקנה<input id="c_project" type="text"></label>
+        <label>תאריך<input id="c_date" type="date"></label>
+        <label class="wide">הערות כלליות<textarea id="c_notes" rows="2"></textarea></label>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2 class="sec" style="margin-top:0;font-size:17px">פירוט הפריטים</h2>
+      <div class="ordwrap"><table class="order" id="orderTable">
+        <thead><tr>
+          <th></th><th>מוצר</th><th>כמות</th><th>גימור / צבע</th><th>צבע מבוקש</th>
+          <th>מחיר יחידה</th><th>תוספת צבע</th><th>סה"כ לפני מע"מ</th><th>מע"מ</th><th>סה"כ כולל</th><th>הערות</th><th>אינסטגרם</th><th></th>
+        </tr></thead>
+        <tbody id="orderBody"></tbody>
+      </table></div>
+      <div class="empty hidden" id="orderEmpty">ההזמנה ריקה — הוסיפו מוצרים מהקטלוג למעלה.</div>
+
+      <div class="sumwrap"><div class="summary" id="summaryBox"></div></div>
+
+      <div class="actions">
+        <button class="btn send" onclick="sendEmail()">📨 שליחת הזמנה</button>
+        <button class="btn add" onclick="sendWhatsApp()">שליחה בוואטסאפ (PDF)</button>
+        <button class="btn dark" onclick="downloadPdf()">הורדת PDF</button>
+        <button class="btn dark" onclick="window.print()">🖨️ הדפסה</button>
+        <button class="btn ghost" onclick="copyOrder()">העתקת סיכום</button>
+        <button class="btn danger" onclick="clearOrder()">ניקוי הזמנה</button>
+      </div>
+      <p class="hint">"שליחת הזמנה" שולחת את ההזמנה ישירות במייל (עם PDF מצורף) — בלי לפתוח אפליקציית מייל. בנייד, "שליחה בוואטסאפ" מצרפת את ה-PDF לשיחה.</p>
+    </div>
+  </section>
+
+  <!-- ============ ADMIN ============ -->
+  <section id="view-adm" class="hidden">
+    <h2 class="sec">מצב ניהול</h2>
+    <div class="notice">
+      כאן מעדכנים לוגו, מחירים, תמונות, קישורי אינסטגרם ומוסיפים מוצרים חדשים. שינויים נשמרים בדפדפן הזה אוטומטית.
+      כדי ליצור קובץ לשליחה ללקוח (עם הכל בפנים) — "הורדת קובץ מעודכן".
+    </div>
+    <div class="adm-actions">
+      <button class="btn add" onclick="downloadUpdated()">⬇️ הורדת קובץ מעודכן (לשליחה ללקוח)</button>
+      <button class="btn dark" onclick="addProduct()">+ הוספת מוצר חדש</button>
+      <button class="btn dark" onclick="restoreDeleted()">♻️ שחזור מוצרים שנמחקו</button>
+      <button class="btn ghost" onclick="toggleAdmin()">חזרה לקטלוג</button>
+      <button class="btn danger" onclick="resetData()">איפוס לנתוני הקובץ המקורי</button>
+    </div>
+
+    <div class="adm-card">
+      <h3>לוגו</h3>
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <img id="admLogoPrev" src="" style="max-height:80px;max-width:150px;background:#0a0a0a;border:1px solid var(--line2);border-radius:10px;padding:8px">
+        <label class="btn dark small" style="cursor:pointer">העלאת לוגו<input type="file" accept="image/*" style="display:none" onchange="setLogo(this)"></label>
+        <button class="btn ghost small" onclick="removeLogo()">הסרת לוגו</button>
+        <span style="font-size:12px;color:var(--dim)">מומלץ PNG עם רקע שקוף. הלוגו יופיע בראש הדף ובדף ההזמנה המודפס.</span>
+      </div>
+    </div>
+
+    <div id="adminList"></div>
+  </section>
+</main>
+
+<footer class="site">
+  <span>Snapir Projects · barsnapir.projects · barsnapir@gmail.com</span>
+  <button onclick="toggleAdmin()">מצב ניהול</button>
+</footer>
+
+<div id="toast"></div>
+<div id="printsheet"></div>
+
+<script>
+"use strict";
+/* ================= data ================= */
+var TEMPLATE = "";
+var DATA = null;
+var FILE_BASE = null;   /* נתוני הקובץ המקורי — לשחזור מוצרים שנמחקו */
+var lastDeleted = null; /* המוצר האחרון שנמחק בהפעלה הזו — לשחזור מלא כולל תמונות */
+var cart = [];
+var LS_KEY = "snapir_catalog_v1";
+
+function loadData(){
+  FILE_BASE = JSON.parse(document.getElementById("product-data").textContent);
+  var base = JSON.parse(document.getElementById("product-data").textContent);
+  try{
+    var saved = localStorage.getItem(LS_KEY);
+    if(saved){
+      var s = JSON.parse(saved);
+      if(s && s.products){
+        if(s.vatRate == null) s.vatRate = base.vatRate;
+        if(!s.logo && base.logo) s.logo = base.logo;   /* keep user edits, adopt file logo if newer */
+        base = s;
+      }
+    }
+  }catch(e){}
+  DATA = base;
+}
+function persist(){ try{ localStorage.setItem(LS_KEY, JSON.stringify(DATA)); }catch(e){ alert("התמונות גדולות מדי לשמירה אוטומטית בדפדפן — השתמשו ב'הורדת קובץ מעודכן' כדי לא לאבד אותן."); } }
+function prod(pid){ return DATA.products.find(function(p){return p.id===pid;}); }
+
+/* ================= helpers ================= */
+function fmt(n){
+  var r = Math.round(n*100)/100;
+  return r.toLocaleString("he-IL",{maximumFractionDigits:2}) + " ₪";
+}
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+function placeholder(name){
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">'
+    + '<rect width="400" height="300" fill="#e2e3e2"/>'
+    + '<rect x="120" y="70" width="160" height="120" rx="12" fill="#c5c7c4"/>'
+    + '<circle cx="200" cy="130" r="28" fill="#e2e3e2"/>'
+    + '<text x="200" y="240" font-family="Arial" font-size="22" fill="#84867f" text-anchor="middle">' + name.replace(/[<>&]/g,"") + '</text>'
+    + '<text x="200" y="268" font-family="Arial" font-size="13" fill="#9fa19a" text-anchor="middle">(העלו תמונה במצב ניהול)</text></svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function logoPlaceholder(){
+  var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" viewBox="0 0 140 140">'
+    + '<polygon points="70,6 134,70 70,134 6,70" fill="none" stroke="#c8a24b" stroke-width="3"/>'
+    + '<polygon points="70,22 118,70 70,118 22,70" fill="none" stroke="#8a7135" stroke-width="1.5"/>'
+    + '<text x="70" y="82" font-family="Arial Black,Arial" font-size="34" font-weight="900" fill="#c8a24b" text-anchor="middle">SP</text></svg>';
+  return "data:image/svg+xml;charset=utf-8," + encodeURIComponent(svg);
+}
+function mainImg(p){ return (p.images && p.images.length) ? p.images[0] : placeholder(p.name); }
+function applyLogo(){
+  var wrap = document.querySelector(".logo-wrap");
+  var img = document.getElementById("siteLogo");
+  if(DATA.logo){ img.src = DATA.logo; wrap.style.display = "flex"; }
+  else { img.removeAttribute("src"); wrap.style.display = "none"; }   /* אין לוגו — מציגים רק את הכיתוב */
+  var a = document.getElementById("admLogoPrev"); if(a) a.src = DATA.logo || logoPlaceholder();
+}
+function toast(msg){
+  var t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(t._h); t._h = setTimeout(function(){ t.classList.remove("show"); }, 1600);
+}
+
+/* ---- pricing: pair logic ---- */
+function lineBase(p, q){
+  q = Math.max(0, Math.floor(q||0));
+  if(p.pairPrice != null && q >= 2){
+    var pairs = Math.floor(q/2), rem = q % 2;
+    return pairs * p.pairPrice + rem * p.unitPrice;
+  }
+  return q * p.unitPrice;
+}
+function effAdd(p){ return (p.colorAdd != null) ? p.colorAdd : 100; }
+function lineColorAdd(p, item){
+  if(item.finish !== "other") return 0;
+  return effAdd(p) * Math.max(0, Math.floor(item.qty||0));
+}
+function lineTotals(item){
+  var p = prod(item.pid);
+  var base = lineBase(p, item.qty);
+  var add = lineColorAdd(p, item);
+  var net = base + add;
+  var vat = net * DATA.vatRate;
+  return {base:base, add:add, net:net, vat:vat, gross:net+vat};
+}
+function orderTotals(){
+  var t = {base:0, add:0, net:0, vat:0, gross:0};
+  cart.forEach(function(it){ var l = lineTotals(it); t.base+=l.base; t.add+=l.add; t.net+=l.net; t.vat+=l.vat; t.gross+=l.gross; });
+  return t;
+}
+
+/* ================= catalog ================= */
+function renderCatalog(){
+  var g = document.getElementById("catalogGrid");
+  g.innerHTML = "";
+  DATA.products.forEach(function(p){
+    var incVat = p.unitPrice * (1+DATA.vatRate);
+    var card = document.createElement("div");
+    card.className = "card";
+    var thumbs = "";
+    if(p.images && p.images.length > 1){
+      thumbs = '<div class="thumbs">' + p.images.map(function(src,i){
+        return '<img src="'+src+'" class="'+(i===0?"sel":"")+'" onclick="swapImg(this,\''+p.id+'\','+i+')">';
+      }).join("") + "</div>";
+    }
+    var addLabel = "תוספת צביעה בצבע: "+fmt(effAdd(p))+" ליחידה";
+    card.innerHTML =
+      '<div class="imgbox"><img id="main-'+p.id+'" src="'+mainImg(p)+'" alt="'+esc(p.name)+'"></div>'
+      + thumbs
+      + '<div class="body">'
+      + '<h3>'+esc(p.name)+(p.nameEn?'<small>'+esc(p.nameEn)+'</small>':'')+'</h3>'
+      + '<p class="desc">'+esc(p.desc)+'</p>'
+      + '<div class="pricebox">'
+      +   '<span class="main">'+fmt(p.unitPrice)+' <small>ליחידה · לפני מע"מ</small></span>'
+      +   '<span class="incvat">כולל מע"מ: '+fmt(incVat)+'</span>'
+      +   '<span class="basefin">המחיר הבסיסי: עץ בירץ\' בציפוי לכה</span>'
+      +   (p.pairPrice!=null ? '<span class="pair">מחיר זוג: '+fmt(p.pairPrice)+' לפני מע"מ</span>' : '<span class="pair" style="color:var(--dim)">אין הנחת זוג</span>')
+      + '</div>'
+      + '<div class="tagrow">'
+      +   '<span class="tag">כלול במחיר: עץ בירץ\' + לכה</span>'
+      +   '<span class="tag">'+esc(addLabel)+'</span>'
+      +   (p.notes ? '<span class="tag note">'+esc(p.notes)+'</span>' : '')
+      + '</div>'
+      + '<a class="igbtn '+(p.instagram?"":"disabled")+'" href="'+esc(p.instagram||"#")+'" target="_blank" rel="noopener">▶ צפייה בשימוש באינסטגרם</a>'
+      + '<div class="addrow">'
+      +   '<label>כמות</label><input type="number" min="1" value="'+p.defaultQty+'" id="qty-'+p.id+'">'
+      +   '<button class="btn add" onclick="addToOrder(\''+p.id+'\')">הוספה להזמנה +</button>'
+      + '</div>'
+      + '</div>';
+    g.appendChild(card);
+  });
+}
+function swapImg(el, pid, i){
+  var p = prod(pid);
+  document.getElementById("main-"+pid).src = p.images[i];
+  el.parentElement.querySelectorAll("img").forEach(function(t){t.classList.remove("sel");});
+  el.classList.add("sel");
+}
+function addToOrder(pid){
+  var q = parseInt(document.getElementById("qty-"+pid).value,10) || 1;
+  var existing = cart.find(function(it){return it.pid===pid;});
+  if(existing){ existing.qty += q; }
+  else cart.push({pid:pid, qty:q, finish:"included", color:"", manualAdd:0, note:""});
+  renderAll();
+  toast("✓ נוסף להזמנה");
+}
+
+/* ================= live cart sidebar ================= */
+function renderCart(){
+  var box = document.getElementById("cartItems");
+  var tot = document.getElementById("cartTotals");
+  var cnt = cart.reduce(function(s,it){return s+it.qty;},0);
+  document.getElementById("cartCount").textContent = cnt;
+  document.getElementById("cartCount2").textContent = cnt;
+  if(!cart.length){
+    box.innerHTML = '<div class="cart-empty">הסל ריק עדיין —<br>הוסיפו מוצרים מהקטלוג</div>';
+    tot.innerHTML = "";
+    return;
+  }
+  box.innerHTML = cart.map(function(it, idx){
+    var p = prod(it.pid); var l = lineTotals(it);
+    var painted = it.finish==="other";
+    var fin = painted
+      ? ("צביעה"+(it.color?" — "+esc(it.color):" (גוון לפי בחירה)")+" · +"+fmt(l.add))
+      : "עץ בירץ' + לכה (כלול)";
+    return '<div class="citem">'
+      + '<div class="cmain">'
+      + '<img src="'+mainImg(p)+'">'
+      + '<div class="inf"><div class="nm">'+esc(p.name)+'</div><div class="fin">'+fin+'</div>'
+      + '<div class="pr">'+fmt(l.net)+' <span style="color:var(--dim);font-weight:400;font-size:11px">לפני מע"מ</span></div></div>'
+      + '<div class="qctl"><button onclick="bumpQty('+idx+',1)">+</button><span>'+it.qty+'</span><button onclick="bumpQty('+idx+',-1)">−</button></div>'
+      + '<button class="x" onclick="removeItem('+idx+')">✕</button>'
+      + '</div>'
+      + '<div class="paintrow">'
+      + '<label><input type="checkbox" '+(painted?"checked":"")+' onchange="togglePaint('+idx+',this.checked)"> צביעה בצבע (+'+effAdd(p)+' ₪ ליח\')</label>'
+      + (painted ? '<input class="ccolor" list="colorlist" placeholder="איזה צבע? (לא חובה)" value="'+esc(it.color)+'" onchange="setItem('+idx+',\'color\',this.value)">' : '')
+      + '</div>'
+      + '</div>';
+  }).join("");
+  var t = orderTotals();
+  tot.innerHTML =
+      '<div class="row"><span>לפני מע"מ</span><span>'+fmt(t.net)+'</span></div>'
+    + '<div class="row"><span>מע"מ '+(DATA.vatRate*100)+'%</span><span>'+fmt(t.vat)+'</span></div>'
+    + '<div class="row g"><span>סה"כ לתשלום</span><span>'+fmt(t.gross)+'</span></div>';
+}
+function bumpQty(idx, d){
+  var it = cart[idx]; if(!it) return;
+  it.qty += d;
+  if(it.qty < 1){ cart.splice(idx,1); }
+  renderAll();
+}
+function togglePaint(idx, on){
+  var it = cart[idx]; if(!it) return;
+  it.finish = on ? "other" : "included";
+  if(!on) it.color = "";
+  renderAll();
+}
+
+/* ================= order table ================= */
+function renderOrder(){
+  var tb = document.getElementById("orderBody");
+  tb.innerHTML = "";
+  document.getElementById("orderEmpty").classList.toggle("hidden", cart.length>0);
+  document.getElementById("orderTable").classList.toggle("hidden", cart.length===0);
+  cart.forEach(function(it, idx){
+    var p = prod(it.pid);
+    var l = lineTotals(it);
+    var finishSel =
+      '<select onchange="setItem('+idx+',\'finish\',this.value)">'
+      + '<option value="included"'+(it.finish==="included"?" selected":"")+'>עץ בירץ\' + לכה — כלול במחיר</option>'
+      + '<option value="other"'+(it.finish==="other"?" selected":"")+'>צביעה בצבע (+'+effAdd(p)+' ₪/יח\')</option>'
+      + '</select>';
+    var colorInput = it.finish==="other"
+      ? '<input class="color" list="colorlist" placeholder="גוון (לא חובה)" value="'+esc(it.color)+'" onchange="setItem('+idx+',\'color\',this.value)">'
+      : '<span style="color:var(--dim);font-size:13px">—</span>';
+    var pairNote = "";
+    if(p.pairPrice!=null && it.qty>=2){
+      var pairs=Math.floor(it.qty/2), rem=it.qty%2;
+      pairNote = '<div style="font-size:11px;color:var(--olive)">'+pairs+' זוג × '+fmt(p.pairPrice)+(rem?' + '+rem+' יח\' × '+fmt(p.unitPrice):'')+'</div>';
+    }
+    var tr = document.createElement("tr");
+    tr.innerHTML =
+      '<td><img class="mini" src="'+mainImg(p)+'"></td>'
+      + '<td><b>'+esc(p.name)+'</b>'+(p.nameEn?'<br><span style="color:var(--dim);font-size:11.5px;letter-spacing:1px">'+esc(p.nameEn)+'</span>':'')+'</td>'
+      + '<td><input class="qty" type="number" min="1" value="'+it.qty+'" onchange="setItem('+idx+',\'qty\',this.value)"></td>'
+      + '<td>'+finishSel+'</td>'
+      + '<td>'+colorInput+'</td>'
+      + '<td class="num">'+fmt(p.unitPrice)+pairNote+'</td>'
+      + '<td class="num">'+(l.add?fmt(l.add):"—")+'</td>'
+      + '<td class="num">'+fmt(l.net)+'</td>'
+      + '<td class="num">'+fmt(l.vat)+'</td>'
+      + '<td class="num total">'+fmt(l.gross)+'</td>'
+      + '<td><input class="lnote" type="text" value="'+esc(it.note)+'" onchange="setItem('+idx+',\'note\',this.value)"></td>'
+      + '<td>'+(p.instagram?'<a class="igbtn" style="padding:3px 8px;font-size:11.5px" href="'+esc(p.instagram)+'" target="_blank">▶ צפייה</a>':'<span style="color:var(--dim);font-size:12px">—</span>')+'</td>'
+      + '<td><button class="rm" title="הסרה" onclick="removeItem('+idx+')">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  renderSummary();
+  buildPrintSheet();
+}
+function setItem(idx, key, val){
+  var it = cart[idx]; if(!it) return;
+  if(key==="qty") it.qty = Math.max(1, parseInt(val,10)||1);
+  else if(key==="manualAdd") it.manualAdd = parseFloat(val)||0;
+  else it[key] = val;
+  renderAll();
+}
+function removeItem(idx){ cart.splice(idx,1); renderAll(); }
+function clearOrder(){ if(confirm("לנקות את כל ההזמנה?")){ cart=[]; renderAll(); } }
+function renderSummary(){
+  var t = orderTotals();
+  document.getElementById("summaryBox").innerHTML =
+      '<div class="row"><span>סה"כ מוצרים (לפני מע"מ)</span><span>'+fmt(t.base)+'</span></div>'
+    + '<div class="row"><span>סה"כ תוספות צבע</span><span>'+fmt(t.add)+'</span></div>'
+    + '<div class="row"><span>סה"כ לפני מע"מ</span><span>'+fmt(t.net)+'</span></div>'
+    + '<div class="row"><span>מע"מ '+(DATA.vatRate*100)+'%</span><span>'+fmt(t.vat)+'</span></div>'
+    + '<div class="row grand"><span>סה"כ לתשלום</span><span>'+fmt(t.gross)+'</span></div>';
+}
+function renderAll(){ renderCart(); renderOrder(); }
+
+/* ---- order text ---- */
+function orderText(){
+  var lines = [];
+  lines.push("הזמנה — Snapir Projects");
+  lines.push("─────────────────");
+  var c = {
+    name: document.getElementById("c_name").value,
+    phone: document.getElementById("c_phone").value,
+    email: document.getElementById("c_email").value,
+    project: document.getElementById("c_project").value,
+    date: document.getElementById("c_date").value,
+    notes: document.getElementById("c_notes").value
+  };
+  if(c.name) lines.push("לקוח: "+c.name);
+  if(c.phone) lines.push("טלפון: "+c.phone);
+  if(c.email) lines.push("מייל: "+c.email);
+  if(c.project) lines.push("פרויקט: "+c.project);
+  if(c.date) lines.push("תאריך: "+c.date);
+  lines.push("");
+  cart.forEach(function(it,i){
+    var p = prod(it.pid); var l = lineTotals(it);
+    var fin = it.finish==="other" ? ("צביעה בצבע"+(it.color?": "+it.color:" (גוון לפי בחירת הלקוח)")) : "עץ בירץ' + לכה (כלול במחיר)";
+    lines.push((i+1)+". "+p.name+(p.nameEn?" ("+p.nameEn+")":"")+" × "+it.qty);
+    lines.push("   גימור: "+fin+(l.add?" (תוספת "+fmt(l.add)+")":""));
+    lines.push("   סה\"כ לפני מע\"מ: "+fmt(l.net)+" | כולל מע\"מ: "+fmt(l.gross));
+    if(it.note) lines.push("   הערה: "+it.note);
+  });
+  var t = orderTotals();
+  lines.push("");
+  lines.push("סה\"כ לפני מע\"מ: "+fmt(t.net));
+  lines.push("מע\"מ "+(DATA.vatRate*100)+"%: "+fmt(t.vat));
+  lines.push("סה\"כ לתשלום: "+fmt(t.gross));
+  if(c.notes) lines.push("\nהערות: "+c.notes);
+  return lines.join("\n");
+}
+/* ---- PDF generation (html2pdf, נטען רק בעת הצורך) ---- */
+function ensurePdfLib(cb){
+  if(window.html2pdf) return cb();
+  var s = document.createElement("script");
+  s.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+  s.onload = cb;
+  s.onerror = function(){ alert("לא ניתן לטעון את מחולל ה-PDF — בדקו חיבור אינטרנט."); };
+  document.head.appendChild(s);
+}
+function buildPdf(cb){
+  buildPrintSheet();
+  var ps = document.getElementById("printsheet");
+  var host = document.createElement("div");
+  host.dir = "rtl";
+  host.style.cssText = "position:fixed;right:-11000px;top:0;width:794px;background:#fff;z-index:-1";
+  document.body.appendChild(host);
+  host.appendChild(ps);
+  ps.style.display = "block";
+  var cname = (document.getElementById("c_name").value || "").trim();
+  var fname = "הזמנה-Snapir" + (cname ? "-"+cname : "") + ".pdf";
+  toast("מכין PDF…");
+  html2pdf().set({
+    margin: 8,
+    image: {type:"jpeg", quality:0.92},
+    html2canvas: {scale:2, backgroundColor:"#ffffff"},
+    jsPDF: {unit:"mm", format:"a4", orientation:"portrait"}
+  }).from(ps).outputPdf("blob").then(function(blob){
+    ps.style.display = "";
+    document.body.appendChild(ps);
+    document.body.removeChild(host);
+    cb(blob, fname);
+  }).catch(function(e){
+    ps.style.display = "";
+    document.body.appendChild(ps);
+    if(host.parentNode) document.body.removeChild(host);
+    alert("שגיאה ביצירת ה-PDF: " + e);
+  });
+}
+function sendWhatsApp(){
+  if(!cart.length) return alert("ההזמנה ריקה");
+  ensurePdfLib(function(){
+    buildPdf(function(blob, fname){
+      var file = new File([blob], fname, {type:"application/pdf"});
+      if(navigator.canShare && navigator.canShare({files:[file]})){
+        /* נייד: חלון שיתוף עם ה-PDF מצורף — בוחרים וואטסאפ */
+        navigator.share({files:[file], title:"הזמנה — Snapir Projects", text:"הזמנה מצורפת כ-PDF"}).catch(function(){});
+      } else {
+        /* מחשב: מורידים את ה-PDF ופותחים וואטסאפ עם סיכום טקסט */
+        var a = document.createElement("a");
+        a.href = URL.createObjectURL(blob); a.download = fname; a.click();
+        URL.revokeObjectURL(a.href);
+        setTimeout(function(){ window.open("https://wa.me/?text="+encodeURIComponent(orderText()), "_blank"); }, 500);
+        toast("ה-PDF ירד למחשב — גררו אותו לשיחה בוואטסאפ");
+      }
+    });
+  });
+}
+function downloadPdf(){
+  if(!cart.length) return alert("ההזמנה ריקה");
+  ensurePdfLib(function(){
+    buildPdf(function(blob, fname){
+      var a = document.createElement("a");
+      a.href = URL.createObjectURL(blob); a.download = fname; a.click();
+      URL.revokeObjectURL(a.href);
+      toast("✓ ה-PDF ירד");
+    });
+  });
+}
+function sendEmail(){
+  if(!cart.length) return alert("ההזמנה ריקה");
+  toast("שולח את ההזמנה למייל…");
+  var subj = "הזמנה חדשה — " + (document.getElementById("c_name").value || "לקוח");
+  var doSend = function(file){
+    var fd = new FormData();
+    fd.append("_subject", subj);
+    fd.append("_template", "box");
+    fd.append("_captcha", "false");
+    fd.append("שם לקוח", document.getElementById("c_name").value);
+    fd.append("טלפון", document.getElementById("c_phone").value);
+    fd.append("מייל לקוח", document.getElementById("c_email").value);
+    fd.append("סיכום הזמנה", orderText());
+    if(file) fd.append("attachment", file);
+    fetch("https://formsubmit.co/ajax/barsnapir@gmail.com", {method:"POST", body:fd})
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j && (j.success === true || j.success === "true")){ toast("✓ ההזמנה נשלחה במייל לבר"); }
+        else{ throw 0; }
+      })
+      .catch(function(){
+        /* גיבוי: פתיחת אפליקציית מייל רגילה */
+        alert("השליחה האוטומטית נכשלה — נפתחת אפליקציית המייל במקום.");
+        location.href = "mailto:barsnapir@gmail.com?subject="+encodeURIComponent(subj)+"&body="+encodeURIComponent(orderText());
+      });
+  };
+  /* מנסים לצרף PDF; אם אין ספרייה — שולחים טקסט בלבד */
+  ensurePdfLib(function(){
+    buildPdf(function(blob, fname){
+      doSend(new File([blob], fname, {type:"application/pdf"}));
+    });
+  });
+}
+function copyOrder(){
+  if(!cart.length) return alert("ההזמנה ריקה");
+  navigator.clipboard.writeText(orderText()).then(function(){ toast("✓ סיכום ההזמנה הועתק"); });
+}
+
+/* ---- print sheet ---- */
+function buildPrintSheet(){
+  var t = orderTotals();
+  var c = function(id){ return esc(document.getElementById(id).value); };
+  var rows = cart.map(function(it,i){
+    var p = prod(it.pid); var l = lineTotals(it);
+    var fin = it.finish==="other" ? ("צביעה בצבע"+(it.color?": "+esc(it.color):" (גוון לפי בחירת הלקוח)")) : "עץ בירץ' + לכה (כלול במחיר)";
+    return "<tr><td>"+(i+1)+'</td><td><img class="pimg" src="'+mainImg(p)+'"></td><td>'+esc(p.name)+(p.nameEn?"<br><small>"+esc(p.nameEn)+"</small>":"")
+      +"</td><td>"+it.qty+"</td><td>"+fin+'</td><td class="num">'+fmt(p.unitPrice)+'</td><td class="num">'+(l.add?fmt(l.add):"—")
+      +'</td><td class="num">'+fmt(l.net)+'</td><td class="num">'+fmt(l.vat)+'</td><td class="num"><b>'+fmt(l.gross)+"</b></td><td>"+esc(it.note)+"</td></tr>";
+  }).join("");
+  document.getElementById("printsheet").innerHTML =
+      '<div class="phead"><div class="tt"><h1>SNAPIR PROJECTS</h1><div>דף הזמנה · barsnapir@gmail.com · barsnapir.projects</div></div>'
+    + (DATA.logo?'<img class="plogo" src="'+DATA.logo+'">':'')
+    + '</div>'
+    + '<div class="cust">'
+    + '<span><b>לקוח:</b> '+c("c_name")+'</span><span><b>טלפון:</b> '+c("c_phone")+'</span><span><b>מייל:</b> '+c("c_email")+'</span>'
+    + '<span><b>פרויקט:</b> '+c("c_project")+'</span><span><b>תאריך:</b> '+c("c_date")+'</span><span></span>'
+    + '</div>'
+    + (document.getElementById("c_notes").value ? "<div><b>הערות:</b> "+c("c_notes")+"</div>" : "")
+    + '<h2>פירוט הזמנה</h2>'
+    + '<table><thead><tr><th>#</th><th>תמונה</th><th>מוצר</th><th>כמות</th><th>גימור / צבע</th><th>מחיר יח\'</th><th>תוספת צבע</th><th>לפני מע"מ</th><th>מע"מ</th><th>סה"כ כולל</th><th>הערות</th></tr></thead>'
+    + "<tbody>"+rows+"</tbody></table>"
+    + '<div class="psum">'
+    + '<div class="row"><span>סה"כ מוצרים לפני מע"מ</span><span>'+fmt(t.base)+'</span></div>'
+    + '<div class="row"><span>סה"כ תוספות צבע</span><span>'+fmt(t.add)+'</span></div>'
+    + '<div class="row"><span>סה"כ לפני מע"מ</span><span>'+fmt(t.net)+'</span></div>'
+    + '<div class="row"><span>מע"מ '+(DATA.vatRate*100)+'%</span><span>'+fmt(t.vat)+'</span></div>'
+    + '<div class="row grand"><span>סה"כ לתשלום</span><span>'+fmt(t.gross)+'</span></div>'
+    + '</div>'
+    + '<p style="margin-top:14px;color:#666;font-size:11px">המחירים לפני מע"מ אלא אם צוין אחרת · מע"מ '+(DATA.vatRate*100)+'% · הצעה זו אינה חשבונית</p>';
+}
+
+/* ================= admin ================= */
+var ADMIN_PIN = "0710";
+var adminUnlocked = false;
+function toggleAdmin(){
+  var adm = document.getElementById("view-adm");
+  var shop = document.getElementById("shop");
+  var showAdm = adm.classList.contains("hidden");
+  if(showAdm && !adminUnlocked){
+    var code = prompt("כניסה למצב ניהול — הזן קוד:");
+    if(code === null) return;
+    if(code !== ADMIN_PIN){ alert("קוד שגוי"); return; }
+    adminUnlocked = true;   /* נשאר פתוח עד לרענון הדף */
+  }
+  adm.classList.toggle("hidden", !showAdm);
+  shop.classList.toggle("hidden", showAdm);
+  document.getElementById("mainNav").classList.toggle("hidden", showAdm);
+  if(showAdm){ renderAdmin(); window.scrollTo(0,0); }
+}
+function renderAdmin(){
+  applyLogo();
+  var wrap = document.getElementById("adminList");
+  wrap.innerHTML = "";
+  DATA.products.forEach(function(p, i){
+    var d = document.createElement("div");
+    d.className = "adm-card";
+    d.innerHTML =
+      '<h3>'+esc(p.name)+' <span style="color:var(--dim);font-size:12px;font-weight:400">('+esc(p.id)+')</span></h3>'
+      + '<div class="adm-grid">'
+      + fld(i,"name","שם")+fld(i,"nameEn","שם באנגלית")
+      + fldNum(i,"unitPrice","מחיר יחידה (לפני מע\"מ)")+fldNum(i,"pairPrice","מחיר זוג (ריק = אין)")
+      + fldNum(i,"colorAdd","תוספת צביעה ליחידה (ריק = 100)")+fldNum(i,"defaultQty","כמות ברירת מחדל")
+      + fld(i,"finishIncluded","גימור כלול")+fld(i,"notes","הערות")
+      + '<label class="wide">תיאור<textarea rows="2" onchange="setProd('+i+',\'desc\',this.value)">'+esc(p.desc)+'</textarea></label>'
+      + '<label class="wide">קישור אינסטגרם<input type="url" value="'+esc(p.instagram)+'" placeholder="https://www.instagram.com/..." onchange="setProd('+i+',\'instagram\',this.value)"></label>'
+      + '</div>'
+      + '<div class="adm-imgs" id="imgs-'+i+'"></div>'
+      + '<div style="margin-top:10px;display:flex;gap:10px">'
+      + '<label class="btn dark small" style="cursor:pointer">+ הוספת תמונות<input type="file" accept="image/*" multiple style="display:none" onchange="addImgs('+i+',this)"></label>'
+      + '<button class="btn danger small" onclick="delProduct('+i+')">מחיקת מוצר</button>'
+      + '</div>';
+    wrap.appendChild(d);
+    renderAdmImgs(i);
+  });
+  function fld(i,k,lbl){ return '<label>'+lbl+'<input type="text" value="'+esc(DATA.products[i][k])+'" onchange="setProd('+i+',\''+k+'\',this.value)"></label>'; }
+  function fldNum(i,k,lbl){ var v=DATA.products[i][k]; return '<label>'+lbl+'<input type="number" value="'+(v==null?"":v)+'" onchange="setProdNum('+i+',\''+k+'\',this.value)"></label>'; }
+}
+function renderAdmImgs(i){
+  var p = DATA.products[i];
+  var box = document.getElementById("imgs-"+i);
+  if(!box) return;
+  var n = (p.images||[]).length;
+  box.innerHTML = (p.images||[]).map(function(src,j){
+    return '<div class="imwrap">'
+      + (j===0 ? '<span class="mainbadge">ראשית</span>' : '')
+      + '<img src="'+src+'">'
+      + '<button class="del" onclick="delImg('+i+','+j+')">✕</button>'
+      + '<div class="imctl">'
+      + (j>0 ? '<button onclick="moveImg('+i+','+j+',-1)" title="הזז קדימה">→</button>' : '')
+      + (j>0 ? '<button onclick="makeMain('+i+','+j+')" title="הפוך לתמונה הראשית">★</button>' : '')
+      + (j<n-1 ? '<button onclick="moveImg('+i+','+j+',1)" title="הזז אחורה">←</button>' : '')
+      + '</div>'
+      + '</div>';
+  }).join("") || '<span style="color:var(--dim);font-size:12.5px">אין תמונות עדיין — התמונה הראשונה שתועלה תהיה הראשית.</span>';
+}
+function moveImg(i, j, d){
+  var arr = DATA.products[i].images;
+  var nj = j + d;
+  if(nj < 0 || nj >= arr.length) return;
+  var tmp = arr[j]; arr[j] = arr[nj]; arr[nj] = tmp;
+  persist(); renderAdmImgs(i); renderCatalog(); renderAll();
+}
+function makeMain(i, j){
+  var arr = DATA.products[i].images;
+  var img = arr.splice(j,1)[0];
+  arr.unshift(img);
+  persist(); renderAdmImgs(i); renderCatalog(); renderAll();
+  toast("✓ התמונה הוגדרה כראשית");
+}
+function setProd(i,k,v){ DATA.products[i][k]=v; persist(); renderCatalog(); renderAll(); if(k==="name") renderAdmin(); }
+function setProdNum(i,k,v){ DATA.products[i][k] = (v===""? null : parseFloat(v)); if(k==="defaultQty"&&DATA.products[i][k]==null)DATA.products[i][k]=1; persist(); renderCatalog(); renderAll(); }
+function addImgs(i, input){
+  var files = Array.prototype.slice.call(input.files);
+  var pend = files.length;
+  files.forEach(function(f){
+    var r = new FileReader();
+    r.onload = function(){
+      compressImage(r.result, 1000, function(dataUrl){
+        DATA.products[i].images.push(dataUrl);
+        if(--pend===0){ persist(); renderAdmImgs(i); renderCatalog(); renderAll(); }
+      });
+    };
+    r.readAsDataURL(f);
+  });
+  input.value = "";
+}
+function setLogo(input){
+  var f = input.files[0]; if(!f) return;
+  var r = new FileReader();
+  r.onload = function(){
+    /* keep PNG for logo to preserve transparency */
+    compressImage(r.result, 480, function(dataUrl){
+      DATA.logo = dataUrl; persist(); applyLogo(); toast("✓ הלוגו עודכן");
+    }, true);
+  };
+  r.readAsDataURL(f);
+  input.value = "";
+}
+function removeLogo(){ DATA.logo = ""; persist(); applyLogo(); }
+function compressImage(src, max, cb, png){
+  var img = new Image();
+  img.onload = function(){
+    var w = img.width, h = img.height;
+    if(w > max){ h = h*max/w; w = max; }
+    var cv = document.createElement("canvas"); cv.width=w; cv.height=h;
+    cv.getContext("2d").drawImage(img,0,0,w,h);
+    cb(png ? cv.toDataURL("image/png") : cv.toDataURL("image/jpeg",0.82));
+  };
+  img.onerror = function(){ cb(src); };
+  img.src = src;
+}
+function delImg(i,j){ DATA.products[i].images.splice(j,1); persist(); renderAdmImgs(i); renderCatalog(); renderAll(); }
+function addProduct(){
+  var id = "p" + Date.now();
+  DATA.products.push({id:id, name:"מוצר חדש", nameEn:"", desc:"", unitPrice:0, pairPrice:null, colorAdd:100,
+    finishIncluded:"עץ בירץ' בציפוי לכה — כלול במחיר", notes:"", defaultQty:1, instagram:"", images:[]});
+  persist(); renderAdmin(); renderCatalog();
+  window.scrollTo(0, document.body.scrollHeight);
+}
+function delProduct(i){
+  var p = DATA.products[i];
+  if(!confirm('שלב 1/3 — למחוק את המוצר "'+p.name+'"?')) return;
+  if(!confirm('שלב 2/3 — האם אתה בטוח שברצונך למחוק את "'+p.name+'"? הפעולה תסיר אותו מהקטלוג.')) return;
+  var t = prompt('שלב 3/3 — אישור סופי: הקלד את המילה מחק כדי למחוק את "'+p.name+'"');
+  if(t !== "מחק"){ toast("המחיקה בוטלה"); return; }
+  lastDeleted = { p: JSON.parse(JSON.stringify(p)), idx: i };
+  DATA.products.splice(i,1); persist(); renderAdmin(); renderCatalog(); renderAll();
+  toast('המוצר נמחק — ניתן לשחזר בכפתור "שחזור מוצרים"');
+}
+function restoreDeleted(){
+  var restored = 0;
+  if(lastDeleted){
+    DATA.products.splice(Math.min(lastDeleted.idx, DATA.products.length), 0, lastDeleted.p);
+    lastDeleted = null; restored++;
+  }
+  FILE_BASE.products.forEach(function(bp, bi){
+    if(!DATA.products.some(function(p){ return p.id === bp.id; })){
+      DATA.products.splice(Math.min(bi, DATA.products.length), 0, JSON.parse(JSON.stringify(bp)));
+      restored++;
+    }
+  });
+  if(!restored){ alert("אין מוצרים לשחזר — כל מוצרי הבסיס קיימים בקטלוג."); return; }
+  persist(); renderAdmin(); renderCatalog(); renderAll();
+  toast("✓ שוחזרו "+restored+" מוצרים");
+}
+function resetData(){
+  if(!confirm("לאפס את כל השינויים ולחזור לנתונים המקוריים של הקובץ?")) return;
+  localStorage.removeItem(LS_KEY); loadData(); applyLogo(); renderCatalog(); renderAdmin(); renderAll();
+}
+function downloadUpdated(){
+  var json = JSON.stringify(DATA, null, 1);
+  var block = '<script type="application/json" id="product-data">\n' + json.replace(/<\//g,"<\\/") + '\n<\/script>';
+  var html = TEMPLATE.replace(/<script type="application\/json" id="product-data">[\s\S]*?<\/script>/, block);
+  var blob = new Blob(["<!DOCTYPE html>\n"+html], {type:"text/html;charset=utf-8"});
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "קטלוג-snapir.html";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast("✓ הקובץ ירד — זה הקובץ לשליחה ללקוח");
+}
+
+/* ================= init ================= */
+document.addEventListener("DOMContentLoaded", function(){
+  TEMPLATE = document.documentElement.outerHTML;
+  loadData();
+  applyLogo();
+  renderCatalog();
+  var dl = document.createElement("datalist"); dl.id = "colorlist";
+  ["שחור","לבן","אפור","ירוק זית","אדום","כחול"].forEach(function(c){ var o=document.createElement("option"); o.value=c; dl.appendChild(o); });
+  document.body.appendChild(dl);
+  var d = new Date(); document.getElementById("c_date").value = d.toISOString().slice(0,10);
+  renderAll();
+});
+</script>
+</body>
+</html>
